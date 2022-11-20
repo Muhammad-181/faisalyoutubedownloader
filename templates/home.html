@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    working
+    <p2>
+        Title: {{ title }}
+        <br>
+        thumbnails: {{ thumbnails }}
+    </p2>
+    <!-- <p>
+        <iframe class="embed-responsive-item" src={{ embed }} allowfullscreen></iframe>
+    </p> -->
+    <p>
+        {% for i in video %}
+            <p>{{ i.filesize }}</p>
+            <p>{{ i.resolution }}</p>
+            <p>{{ i.type }}</p>
+            <p>{{ i.title }}  </p>
+            <form action="" method="POST">
+                {% csrf_token %}
+                <button type="submit" value="Download" class="download-btn">Download</button>
+                <!-- <input type="submit" class="btn" value="download"> -->
+            </form>
+
+        {% endfor %}
+    </p>
+    <p>
+        {% for i in audio %}
+            <p>{{ i.filesize }}</p>
+            <p>{{ i.resolution }}</p>
+            <p>{{ i.type }}</p>
+            <p>{{ i.title }} <form action="" method="POST">
+                {% csrf_token %}
+                <input type="submit" class="btn" value="download">
+            </form>  </p>
+        {% endfor %}
+    </p>
+
+   
+
+    
+</body>
+</html>

@@ -1,0 +1,54 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <div class="heading">
+        Download page
+    </div>
+    <div class="thumbnail">
+        <img src="{{thumbnail}}" alt="video thumbnail" class="thumbnail-img">
+    </div>
+
+    <div class="ct">
+        Title :{{title}}
+        <br>
+        <br>
+        By: {{author}}
+        <br>
+        <br>
+        Length:{{length}}
+    </div>
+
+    <div class="ct">
+        Choose your prefered attributes from below
+    </div>
+
+    <div class="ct">
+        only 144, 360 and 720p include audio
+    </div>
+
+    <table>
+        <thead>
+            <tr class="table-heading">
+                <th scope="col">Attributes</th>
+                <th scope="col">Download</th>
+            </tr>
+        </thead>
+
+        {% for i in onlyres %}
+
+        <tbody>
+            <tr>
+                <td data-label="Attributes">{{i}}</td>
+                <td data-label="Download">
+                    <form action="{% url 'success' i %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" value="Download" class="download-btn">Download</button>
+                    </form>
+                </td>
+            </tr>
+
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
