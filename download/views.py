@@ -87,8 +87,36 @@ def success(request, res):
         return render(request, 'error.html')
 
 
+def about(request):
+    return render(request, 'about.html')
 
 
 
+def music(request):
+    return render(request, 'music.html')
 
 
+
+def download_music(request):
+    url = request.GET.get('url')
+    yt = YouTube(url)
+    title = yt.title
+
+    stream = yt.streams.filter(only_audio=True).first()
+
+
+    homedir = os.path.expanduser('~')
+
+    dirs = homedir + '/downloads'
+    size = stream.filesize // 104576
+
+
+    if request.method =='POST' and size < 900:
+        streams.download(outputpath=dirs, filename=f'{title}.mp3')
+        file = FileWrapper(open(f'{dirs}/{title}.mp3', 'rb'))
+        response = HttpResponse(file, content_type = 'audio.mp3')
+        response['Content-Disposition'] = f'attachment; file = "{title}.mp3"'
+        os.remove(f'{dirs}/{title}.mp3')
+        return response
+    else:
+        return render(request, 'error.html')
